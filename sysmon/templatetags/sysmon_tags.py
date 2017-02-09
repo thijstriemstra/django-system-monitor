@@ -58,7 +58,7 @@ class SysMon(template.Node):
         # memory
         mem_info = memTuple(
             total=bytes2human(pu.virtual_memory().total),
-            used=intcomma(pu.virtual_memory().used, use_l10n=False))
+            used=intcomma(pu.virtual_memory().percent, use_l10n=False))
 
         # disk
         partitions = list()
