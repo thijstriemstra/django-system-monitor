@@ -52,13 +52,13 @@ class SysMon(template.Node):
 
         # cpu
         cpu_info = cpuTuple(
-            core=pu.NUM_CPUS,
+            core=pu.cpu_count(),
             used=intcomma(pu.cpu_percent(), use_l10n=False))
 
         # memory
         mem_info = memTuple(
-            total=bytes2human(pu.TOTAL_PHYMEM),
-            used=intcomma(pu.virtual_memory().percent, use_l10n=False))
+            total=bytes2human(pu.virtual_memory().total),
+            used=intcomma(pu.virtual_memory().used, use_l10n=False))
 
         # disk
         partitions = list()
@@ -95,7 +95,7 @@ class SysMon(template.Node):
         for process in pu.process_iter():
 
             try:
-                percent = process.get_memory_percent()
+                percent = process.memory_percent()
             except AccessDenied:
                 percent = "Access Denied"
             else:
